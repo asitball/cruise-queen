@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class <span id="quantity-price">150</span></label>
+                    <input id="ticket-count" class="inp-style inp-width" type="number" name="">
+                </div>
+                <div class="plus-minus-btn">
+                    <p> <span id="quantity-increase">+</span> <span id="quantity-decrease">-</span> </p>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy <span id="quantity-price-eco">100</span></label>
+                    <input id="ticket-count-eco" class="inp-style inp-width" type="number" name="">
+                </div>
+                <div class="plus-minus-btn">
+                    <p> <span id="quantity-increase-eco">+</span> <span id="quantity-decrease-eco">-</span> </p>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right"></div>
+                        <p id="subtotal">000</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge VAT 10%</p>
+                    </div>
+                    <div class="right">
+                        <p id="vat-amount">00</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p><span id="grand-total">000</span></p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-style">Book Now</button>
+        </div>
+    </main>
+
+    <!--Thank You-->
+
+    <script>
+         document.getElementById('quantity-increase').addEventListener('click',function(){
+           handleProductChange(true);
+        })
+        document.getElementById("quantity-decrease").addEventListener('click', function(){
+            handleProductChange(false);
+        })
+        function handleProductChange(isIncrease){
+            const ticketInput = document.getElementById('ticket-count');
+            const ticketCount = parseInt(ticketInput.value);
+            // const ticketNewCount = ticketCount -1;
+            let ticketNewCount =ticketCount;
+            if(isIncrease == true){
+                ticketNewCount = ticketCount + 1;
+            }
+            if(isIncrease == false && ticketCount > 0){
+                ticketNewCount = ticketCount - 1;
+            }
+            ticketInput.value = ticketNewCount;
+
+            const totalPrice = ticketNewCount * 150;
+            document.getElementById('quantity-price').innerText = '$' +  totalPrice;
+        }
+
+
+        
+        document.getElementById('quantity-increase-eco').addEventListener('click',function(){
+           handleProductChangeEco(true);
+        })
+        document.getElementById("quantity-decrease-eco").addEventListener('click', function(){
+            handleProductChangeEco(false);
+        })
+        function handleProductChangeEco(isIncrease){
+            const ticketInputEco = document.getElementById('ticket-count-eco');
+            const ticketCountEco = parseInt(ticketInputEco.value);
+            // const ticketNewCount = ticketCount -1;
+            let ticketNewCountEco = ticketCountEco;
+            if(isIncrease == true){
+                ticketNewCountEco = ticketCountEco + 1;
+            }
+            if(isIncrease == false && ticketCountEco > 0){
+                ticketNewCountEco = ticketCountEco - 1;
+            }
+            ticketInputEco.value = ticketNewCountEco;
+
+            const totalPriceEco = ticketNewCountEco * 100;
+            document.getElementById('quantity-price-eco').innerText = '$' +  totalPriceEco;
+
+            calculateTotal();
+        }
+        function calculateTotal(){
+            const ticketInput = document.getElementById('ticket-count');
+            const ticketCount = parseInt(ticketInput.value);
+
+            const ticketInputEco = document.getElementById('ticket-count-eco');
+            const ticketCountEco = parseInt(ticketInputEco.value);
+
+            const totalPrice = ticketCount * 150 + ticketCountEco * 100;
+            document.getElementById('subtotal').innerText = '$' + totalPrice;
+
+
+            
+            const vat = totalPrice * 0.1;
+            document.getElementById('vat-amount').innerText = '$' + vat;
+            
+            const grandTotal = totalPrice + vat;
+            document.getElementById('grand-total').innerText = '$' + grandTotal;
+
+        }
+
+        // document.getElementById('quantity-increase').addEventListener('click',function(){
+        //    const ticketInput = document.getElementById('ticket-count');
+        //    const ticketCount = parseInt(ticketInput.value);
+        //    const ticketNewCount = ticketCount + 1;
+        //    ticketInput.value = ticketNewCount;
+        //    const totalPrice = ticketNewCount * 150;
+        //     document.getElementById('quantity-price').innerText = '$' + totalPrice;
+          
+        // })
+        // document.getElementById("quantity-decrease").addEventListener('click', function(){
+        //     const ticketInput = document.getElementById('ticket-count');
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     const ticketNewCount = ticketCount -1;
+        //     ticketInput.value = ticketNewCount;
+
+        //     const totalPrice = ticketNewCount * 150;
+        //     document.getElementById('quantity-price').innerText = '$' +  totalPrice;
+            
+        // })
+    </script>
+</body>
+
+</html>
